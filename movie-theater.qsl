@@ -1,0 +1,135 @@
+--######################################## HW2 - MOVIE THEATER ########################################--
+-- Movie Table
+CREATE TABLE movie(
+	movie_id SERIAL PRIMARY KEY,
+	movie_date DATE DEFAULT CURRENT_DATE,
+	movie_name VARCHAR(500),
+	movie_year INTEGER,
+	movie_genre VARCHAR(20)
+);
+
+-- Customer Table
+CREATE TABLE customer(
+	customer_id SERIAL PRIMARY KEY,
+	seat_num INTEGER,
+	billing_info VARCHAR(150)
+);
+
+-- Concession Table
+CREATE TABLE concession(
+	con_id SERIAL PRIMARY KEY,
+	con_item VARCHAR(20),
+	con_amount NUMERIC(6,2),
+	customer_id INTEGER NOT NULL,
+	FOREIGN KEY(customer_id) REFERENCES customer(customer_id)
+);
+
+-- Ticket Table
+CREATE TABLE ticket(
+	ticket_id SERIAL PRIMARY KEY,
+	ticket_amount NUMERIC(6,2),
+	ticket_date DATE DEFAULT CURRENT_DATE,
+	customer_id INTEGER NOT NULL,
+	movie_id INTEGER NOT NULL,
+	FOREIGN KEY(customer_id) REFERENCES customer(customer_id),
+	FOREIGN KEY(movie_id) REFERENCES movie(movie_id)
+);
+
+-- Insert into Movie Table
+INSERT INTO movie(
+	movie_id,
+	movie_name,
+	movie_year,
+	movie_genre
+)VALUES(
+	1,
+	'Forrest Gump',
+	1994,
+	'Drama'
+);
+
+INSERT INTO movie(
+	movie_id,
+	movie_name,
+	movie_year,
+	movie_genre
+)VALUES(
+	2,
+	'Doubt',
+	2008,
+	'Drama'
+);
+
+-- Insert into Customer Table
+INSERT INTO customer(
+	customer_id,
+	seat_num,
+	billing_info
+)VALUES(
+	1,
+	23,
+	'1010-1010-1010-1010 123 12/21'
+);
+INSERT INTO customer(
+	customer_id,
+	seat_num,
+	billing_info
+)VALUES(
+	2,
+	12,
+	'1013-1812-1419-1719 144 10/23'
+);
+
+-- Insert into Concession Table
+INSERT INTO concession(
+	con_id,
+	con_item,
+	con_amount,
+	customer_id
+)VALUES(
+	1,
+	'water',
+	2.99,
+	1
+);
+INSERT INTO concession(
+	con_id,
+	con_item,
+	con_amount,
+	customer_id
+)VALUES(
+	2,
+	'popcorn',
+	4.99,
+	2
+);
+
+-- Insert into Ticket Table
+INSERT INTO ticket(
+	ticket_id,
+	ticket_amount,
+	customer_id,
+	movie_id
+)VALUES(
+	1,
+	12.99,
+	1,
+	1
+);
+INSERT INTO ticket(
+	ticket_id,
+	ticket_amount,
+	customer_id,
+	movie_id
+)VALUES(
+	2,
+	16.99,
+	2,
+	2
+);
+
+SELECT * FROM movie;
+SELECT * FROM customer;
+SELECT * FROM concession;
+SELECT * FROM ticket;
+
